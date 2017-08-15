@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta name="description" content="">
+
+    <meta name="author" content="Center for Economic and Policy Research">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+
+    <!-- jQuery and DataTable libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+
+  </head>
+
+  <body>
+        
+  	<main class="container">
+
+
+<!-- VISUALIZATIONS -->
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#map">US Map</a></li>
+  <li><a data-toggle="tab" href="#menu1">Rust Belt States</a></li>
+</ul>
+
+<div class="tab-content">
+<div class="row tab-pane fade in active" id="map">
+  <div class="col-md-3">
+    <h4>Categories</h4>
+    <ul class="nav nav-pills nav-stacked" id="categories" role="tablist">
+      <li class="active"><a>All</a></li>
+      <li><a>Manufacturing</a></li>
+      <li><a>Construction</a></li>
+      <li><a>Mining and Logging</a></li>
+      <li><a>Mining, Logging and Construction</a></li>
+    </ul>
+	<br/>
+    <div class="well">
+        <input type="radio" name="month-select" value="/wp-content/themes/bluecollar/data/jobs-by-state-three-month-median-2017-7.json" checked="checked"> <small>3-Month Moving Median (% Change)</small><br/>
+        <input type="radio" name="month-select" value="/wp-content/themes/bluecollar/data/jobs-by-state-pch-2017-7.json"> <small>1 Month (% Change)</small>
+    </div>
+    <select class="form-control" id="month">
+        <option value="1496275200000">June 2017</option>
+        <option value="1493596800000">May 2017</option>
+	    <option value="1491004800000">April 2017</option>
+	    <option value="1488326400000">March 2017</option>
+        <option value="1485907200000">February 2017</option>
+        <option value="1483228800000">January 2017</option>
+        <option value="1480550400000">December 2016</option>
+    </select>
+  </div>
+  <div class="col-md-9">
+    <div id="container" style="height: 500px; min-width: 315px; max-width: 800px; margin: 0 auto"></div>
+    <div class="text-center small"><br/>
+      <svg width="15" height="15">
+        <rect x="1" y="0" rx="0" ry="0" width="15" height="15"
+        style="fill:black;stroke:#DDD;stroke-width:2;" />
+      Sorry, your browser does not support inline SVG.
+      </svg>
+      <span>Data not available</span>
+    </div>
+  </div>
+</div>
+
+<div class="row tab-pane fade" id="menu1">
+  <div class="col-md-3">
+    <h4>States</h4>
+    <ul class="nav nav-pills nav-stacked" id="states" role="tablist">
+      <li class="active" data-id="IL"><a>Illinois</a></li>
+      <li data-id="IN"><a>Indiana</a></li>
+      <li data-id="MI"><a>Michigan</a></li>
+      <li data-id="OH"><a>Ohio</a></li>
+      <li data-id="PA"><a>Pennsylvania</a></li>
+      <li data-id="WI"><a>Wisconsin</a></li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <div id="rb-container" style="height: 500px; min-width: 315px; max-width: 800px; margin: 0 auto"></div>
+  </div>
+</div>
+</div>
+</main>
+
+  	<!-- Latest compiled JavaScript -->
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+  	<script src="js/scripts.js"></script>
+  </body>
+
+</html>
+
