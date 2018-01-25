@@ -237,7 +237,7 @@ def rollit(df):
     df_ranked['three-month-median'] = pd.rolling_apply(df_ranked['value'], 3, np.median)
     
     # remove months where three-month median could not be applied
-    df_ranked = df_ranked[df_ranked.date>earliest_month[0]]
+    df_ranked = df_ranked[df_ranked.date>pd.to_datetime(earliest_month[0])]
     
     # drop the 'value' column and rename the three-month-median column 'value' for highcharts
     df_ranked = df_ranked.drop('value', 1)

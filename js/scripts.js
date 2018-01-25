@@ -12,7 +12,7 @@ month[9] = "October";
 month[10] = "November";
 month[11] = "December";
 
-function buildMap(file='data/jobs-by-state-three-month-median-2017-7.json',jobcat="All",jobmon=1496275200000) {
+function buildMap(file='data/jobs-by-state-three-month-median-2018-1.json',jobcat="All",jobmon=1512086400000) {
   
   $.getJSON(file, function (data) {
   
@@ -46,6 +46,18 @@ function buildMap(file='data/jobs-by-state-three-month-median-2017-7.json',jobca
             backgroundColor: 'rgba(255,255,255,0.85)',
             verticalAlign: 'bottom'
         },
+        
+        credits: {
+            enabled: true,
+            text: "Source: Federal Reserve Bank of St. Louis, https://bluecollarjobs.us/,",
+            style: {
+                fontSize: 12
+            },
+            position: {
+                align: 'left',
+                x: 50
+            }
+        },        
 
         mapNavigation: {
             enabled: true
@@ -78,9 +90,7 @@ function buildMap(file='data/jobs-by-state-three-month-median-2017-7.json',jobca
                 pointFormat: '{point.code}: {point.value}%'
             }
         }]
-    }, function(chart) {
-        chart.renderer.text('Source: Federal Reserve Bank of St. Louis. https://bluecollarjobs.us/',20,495).add();
-      });
+    });
   });
 }
 
@@ -90,7 +100,7 @@ function buildRBPlot(state="IL") {
   let manValues = [];
   let mineValues = [];
 
-   $.getJSON('data/jobs-by-state--2017-7.json', function (data) {
+   $.getJSON('data/jobs-by-state--2018-1.json', function (data) {
      
      var filteredData=$(data).filter(function (i,n){return n.code == state});
 
@@ -133,7 +143,19 @@ function buildRBPlot(state="IL") {
             }]
             
           },
-                
+          
+          credits: {
+            enabled: true,
+            text: "Source: Federal Reserve Bank of St. Louis, https://bluecollarjobs.us/",
+            style: {
+                fontSize: 12
+            },
+            position: {
+                align: 'left',
+                x: 50
+            }
+          },
+          
           plotOptions: {
              series: {
                  pointStart: Date.UTC(2016, 11),
@@ -195,8 +217,6 @@ function buildRBPlot(state="IL") {
                 dashStyle: 'dot'
               }]
             }]
-      }, function(chart) {
-        chart.renderer.text('Source: Federal Reserve Bank of St. Louis. https://bluecollarjobs.us/',20,495).add();
       });
     });
 }
