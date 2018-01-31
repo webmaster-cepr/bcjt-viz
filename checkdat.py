@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 def bls():
     """Pulls construction and manufacturing jobs data from the BLS """
     import pandas as pd
+    import numpy as np
     import datetime
     
     now = datetime.datetime.now()
@@ -15,6 +18,7 @@ def bls():
         'Colorado': 'CO',
         'Connecticut': 'CT',
         'Delaware': 'DE',
+        'District of Columbia': 'DC',
         'Florida': 'FL',
         'Georgia': 'GA',
         'Hawaii': 'HI',
@@ -60,6 +64,7 @@ def bls():
     }
     
     bls_dat = pd.read_excel('https://www.bls.gov/web/laus/table3x.xlsx', skiprows=5, skip_footer=154)
+
     # complete cases
     bls_dat = bls_dat.dropna(axis=0, how='all')
     
@@ -74,6 +79,10 @@ def bls():
 
     bls_clean = pd.melt(bls_dat, id_vars='state')
     
+    # removing nas coded as an mdash
+    bls_clean.loc[bls_clean['value']==u'–','value'] = np.NaN
+    bls_clean = bls_clean.dropna(axis=0, how='any')    
+    
     # convert variable to datetime and create category columns
     bls_clean['date'] = bls_clean['variable'].str.extract('^(.*)(?=_)',expand=True)
     bls_clean['date'] = pd.to_datetime(bls_clean['date'])
@@ -85,6 +94,10 @@ def bls():
     bls_clean = bls_clean.drop(['variable'], axis=1)
     
     bls_clean = bls_clean[bls_clean['category'] != 'Total']
+    # Adjust Construction category for DE, DC, HI, MD, NE, SD, TN
+    combined_states = ['DE', 'DC', 'HI', 'MD', 'NE', 'SD', 'TN']
+    
+    bls_clean.loc[(bls_clean['state'].isin(combined_states)) & (bls_clean['category']=="Construction"),'category'] = 'Mining, Logging and Construction'    
     
     return bls_clean
 
@@ -103,11 +116,11 @@ def compare(primary,comparison):
     df2 = df2.rename(index=str, columns={"code": "state"})
     df2 = df2.reset_index(drop=True)
     df2 = df2[['state','value','date','category']]
-    
+       
     def get_different_rows(source_df, new_df):
         """Returns just the rows from the new dataframe that differ from the source dataframe"""
         merged_df = source_df.merge(new_df, indicator=True, how='outer')
         changed_rows_df = merged_df[merged_df['_merge'] == 'right_only']
         return changed_rows_df.drop('_merge', axis=1)
     
-    return get_different_rows(df1,df2)
+    return get_different_rows(df2,df1)
